@@ -7,13 +7,16 @@ const Stream = require('./commands/stream/stream');
 const Config = require('./config');
 
 bot.on('ready', () => {
-  // bot.user.setAvatar('avatar.jpg')
-  //     .then(() => console.log('Avatar mis en place avec succès.'))
-  //     .catch(console.error)
-  // bot.user.setGame('Dreaming')
-  //     .then(() => console.log('Jeu mis en place avec succès.'))
-  //     .catch(console.error)
-  // bot.user.setUsername('I-Robot');
+  /*
+  bot.user.setAvatar('avatar.jpg')
+    .then(() => console.log('Avatar mis en place avec succès.'))
+    .catch(console.error);
+  bot.user.setUsername('I-Robot');
+  */
+
+  bot.user.setGame('Dreaming')
+    .then(() => console.log('Jeu mis en place avec succès.'))
+    .catch(console.error);
 });
 
 bot.on('guildMemberAdd', (member) => {

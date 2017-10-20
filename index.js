@@ -37,8 +37,8 @@ bot.on('message', (message) => {
     }
     if (message.author.id === message.guild.ownerID &&
             message.content.includes('!disconnect')) {
-      // throwing an error to stop execution
-      throw new Error();
+      bot.destroy();
+      process.exit();
     }
   }
 });

@@ -2,6 +2,7 @@ module.exports = class Play {
   static action(self) {
     const voiceChannel = self.getVoiceChannel();
     const args = self.message.content.split(' ');
+    this.impossible = false;
     this.track = null;
     if (args[1]) {
       if (self.YoutubeStream.validateURL(args[1])) {
@@ -11,7 +12,7 @@ module.exports = class Play {
         };
         self.addToPlaylist(this.track);
       } else {
-        self.message.reply('Lecture impossible...');
+        this.impossible = true;
       }
     }
 
@@ -26,6 +27,14 @@ module.exports = class Play {
     } else if (this.track) {
       self.playNext();
     } else {
+      this.impossible = true;
+    }
+
+    this.reply(self);
+  }
+
+  static reply(self) {
+    if (this.impossible) {
       self.message.reply('Lecture impossible...');
     }
   }

@@ -6,6 +6,7 @@ const Ping = require('./commands/ping');
 const Stream = require('./commands/stream/stream');
 const Config = require('./config');
 const Hello = require('./commands/hello');
+const Help = require('./commands/help');
 
 bot.on('ready', () => {
   /*
@@ -32,6 +33,7 @@ bot.on('message', (message) => {
     Stream.parse(message);
     Ping.parse(message);
     Google.parse(message);
+    Help.parse(message);
     if (message.content.includes(`<@${bot.user.id}>`)) {
       Hello.parse(message);
     }

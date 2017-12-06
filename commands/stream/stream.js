@@ -69,7 +69,7 @@ module.exports = class Stream extends Command {
       .filter(channel => channel.type === 'voice')
       .first();
 
-      // Author's voice channel if connected or default channel
+    // Author's voice channel if connected or default channel
 
     return (authorVoiceChannelID
       ? this.message.guild.channels.get(authorVoiceChannelID)

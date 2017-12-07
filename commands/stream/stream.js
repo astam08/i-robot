@@ -10,6 +10,7 @@ const YoutubeStream = require('ytdl-core');
 const streamMessage = ['!play', '!stop', '!next', '!pause', '!resume'];
 
 let playlist = [];
+let localPlaying;
 
 module.exports = class Stream extends Command {
   static match(message) {
@@ -26,6 +27,7 @@ module.exports = class Stream extends Command {
     };
     this.message = message;
     this.YoutubeStream = YoutubeStream;
+    this.voiceChannel = null;
 
     if (message.channel.type !== 'text') {
       message.channel
@@ -65,15 +67,21 @@ module.exports = class Stream extends Command {
     const authorVoiceChannelID = this.message.member.voiceChannelID;
 
     // Default voice channel
-    const defaultVoiceChannel = this.message.guild.channels
+    let defaultVoiceChannel = this.message.guild.channels
       .filter(channel => channel.type === 'voice')
       .first();
 
-    // Author's voice channel if connected or default channel
+    // default channel or bot's voice channel if connected
+    if (this.voiceChannel && this.voiceChannel.joinable) {
+      defaultVoiceChannel = this.voiceChannel;
+    }
 
-    return (authorVoiceChannelID
+    // Author's voice channel if connected or default channel
+    this.voiceChannel = (authorVoiceChannelID
       ? this.message.guild.channels.get(authorVoiceChannelID)
       : defaultVoiceChannel);
+
+    return this.voiceChannel;
   }
 
   /**
@@ -90,12 +98,15 @@ module.exports = class Stream extends Command {
     this.message.reply('Ajouté à la playlist :smirk:');
   }
 
+  /**
+     * Used in stop.js
+     */
   static emptyPlaylist() {
     playlist = [];
   }
 
   /**
-     * Handle voiceChannel disconnection and start next track
+     * Handles voiceChannel disconnection and starts playing on new connection
      */
   static playNext() {
     if (playlist.length > 0) {
@@ -114,55 +125,50 @@ module.exports = class Stream extends Command {
   }
 
   /**
-     * Start next track in playlist
+     * Starts next track in playlist on given connection
      * @param connection
      */
   static play(connection) {
     try {
       this.playing = playlist.shift();
-
       this.playing.stream = YoutubeStream(this.playing.url, { filter: 'audioonly' });
 
       this.playing.stream.on('info', (info) => {
         this.message.channel.send(`Lecture de **${info.title}** envoyé par ${this.playing.author}`);
       });
-
+      setTimeout(() => {
+        localPlaying = this.playing;
+      }, 1000);
       connection
         .playStream(this.playing.stream, this.streamOptions)
         .on('error', () => {
           this.message.reply('Lecture impossible...');
           if (connection) {
             connection.channel.leave();
+            this.voiceChannel = null;
           }
         })
         .on('end', () => {
-          connection.channel.leave();
-          this.playing = null;
           if (playlist.length > 0) {
-            // @TODO: call this.next(); to continue playing the playlist
+            setTimeout(() => {
+              if (this.playing.id === localPlaying.id) {
+                this.playing = null;
+                this.playNext();
+              }
+            }, 1500);
           } else {
+            this.playing = null;
             this.message.channel.send('Fin de la playlist');
+            connection.channel.leave();
+            this.voiceChannel = null;
           }
         });
     } catch (e) {
       this.message.reply('Lecture impossible...');
       if (connection) {
         connection.channel.leave();
+        this.voiceChannel = null;
       }
     }
-  }
-
-  /**
-     * Supposed to check every second if a track is over,
-     * and to play the next if there is one.
-     *
-     * Not used
-     */
-  static next() {
-    setInterval(() => {
-      if (!this.playing && playlist.length > 0) {
-        Next.action(this);
-      }
-    }, 1000);
   }
 };

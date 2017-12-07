@@ -9,6 +9,7 @@ module.exports = class Play {
         this.track = {
           author: self.message.author,
           url: args[1],
+          id: new Date().getUTCMilliseconds(),
         };
         self.addToPlaylist(this.track);
       } else {

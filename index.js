@@ -16,9 +16,7 @@ bot.on('ready', () => {
     bot.user.setUsername('I-Robot');
     */
 
-  bot.user.setGame('Dreaming')
-    .then(() => console.log('Jeu mis en place avec succès.'))
-    .catch(console.error);
+  Stream.getStreamInfo(bot);
 });
 
 bot.on('guildMemberAdd', (member) => {

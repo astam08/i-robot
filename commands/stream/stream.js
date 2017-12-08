@@ -10,7 +10,7 @@ const YoutubeStream = require('ytdl-core');
 const streamMessage = ['!play', '!stop', '!next', '!pause', '!resume'];
 
 let playlist = [];
-let localPlaying;
+let localPlayingID;
 
 module.exports = class Stream extends Command {
   static match(message) {
@@ -134,14 +134,26 @@ module.exports = class Stream extends Command {
       this.playing.stream = YoutubeStream(this.playing.url, { filter: 'audioonly' });
 
       this.playing.stream.on('info', (info) => {
-        this.message.channel.send(`Lecture de **${info.title}** envoyé par ${this.playing.author}`);
+        this.playing.trackInfo = info.title;
+        this.getStreamInfo(this.bot, this.playing.trackInfo);
+        this.message.channel.send(`Lecture de **${this.playing.trackInfo}** envoyé par ${this.playing.author}`);
       });
+
       setTimeout(() => {
-        localPlaying = this.playing;
+        localPlayingID = this.playing.id;
       }, 1000);
+
       connection
         .playStream(this.playing.stream, this.streamOptions)
+        .on('speaking', (plays) => {
+          if (plays) {
+            this.getStreamInfo(this.bot, this.playing.trackInfo);
+          } else {
+            this.getStreamInfo(this.bot, `${this.playing.trackInfo} (paused)`);
+          }
+        })
         .on('error', () => {
+          this.getStreamInfo(this.bot);
           this.message.reply('Lecture impossible...');
           if (connection) {
             connection.channel.leave();
@@ -151,12 +163,13 @@ module.exports = class Stream extends Command {
         .on('end', () => {
           if (playlist.length > 0) {
             setTimeout(() => {
-              if (this.playing.id === localPlaying.id) {
+              if (this.playing.id === localPlayingID) {
                 this.playing = null;
                 this.playNext();
               }
             }, 1500);
           } else {
+            this.getStreamInfo(this.bot);
             this.playing = null;
             this.message.channel.send('Fin de la playlist');
             connection.channel.leave();
@@ -164,11 +177,24 @@ module.exports = class Stream extends Command {
           }
         });
     } catch (e) {
+      this.getStreamInfo(this.bot);
       this.message.reply('Lecture impossible...');
       if (connection) {
         connection.channel.leave();
         this.voiceChannel = null;
       }
     }
+  }
+
+  static getStreamInfo(bot, data = 'Dreaming') {
+    if (!this.bot) {
+      this.bot = bot;
+    }
+
+    bot.user.setPresence({
+      game: {
+        name: data, type: 0,
+      },
+    });
   }
 };

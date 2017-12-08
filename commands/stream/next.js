@@ -14,8 +14,8 @@ module.exports = class Next {
           self.addToPlaylist(this.track, true);
         } else {
           self.message.reply('Lecture impossible...');
+          return;
         }
-        return;
       }
     }
     self.playNext();

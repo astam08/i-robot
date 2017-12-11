@@ -35,9 +35,10 @@ bot.on('message', (message) => {
     if (message.content.includes(`<@${bot.user.id}>`)) {
       Hello.parse(message);
     }
-    if (message.author.id === message.guild.ownerID &&
-            message.content.includes('!disconnect')) {
-      bot.destroy();
+    if (message.guild
+        && message.message.author.id === message.guild.ownerID
+        && message.content.includes('!disconnect')) {
+      bot.destroy().catch();
       process.exit();
     }
   }
@@ -53,4 +54,4 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
   Stream.checkEmptyChannel(guild.channels.get(botMember.voiceChannelID));
 });
 
-bot.login(Config.token());
+bot.login(Config.token()).catch();

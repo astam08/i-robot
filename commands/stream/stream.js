@@ -206,7 +206,7 @@ module.exports = class Stream extends Command {
       game: {
         name: data, type: 0,
       },
-    });
+    }).catch();
   }
 
   /**

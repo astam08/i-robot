@@ -1,6 +1,6 @@
 module.exports = class Play {
   static action(self) {
-    const voiceChannel = self.getVoiceChannel();
+    const voiceChannel = self.getVoiceChannel(false);
     const args = self.message.content.split(' ');
     this.impossible = false;
     this.track = null;
@@ -17,7 +17,7 @@ module.exports = class Play {
       }
     }
 
-    if (voiceChannel.connection) {
+    if (voiceChannel && voiceChannel.connection) {
       if (voiceChannel.connection.dispatcher && !args[1]) {
         if (voiceChannel.connection.dispatcher.paused) {
           voiceChannel.connection.dispatcher.resume();

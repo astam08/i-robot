@@ -43,4 +43,14 @@ bot.on('message', (message) => {
   }
 });
 
+bot.on('voiceStateUpdate', (oldMember, newMember) => {
+  let guildID = newMember.guild.id;
+  guildID = guildID ? oldMember.guild.id : guildID;
+
+  const guild = bot.guilds.find('id', guildID);
+  const botMember = guild.members.find('id', bot.user.id);
+
+  Stream.checkEmptyChannel(guild.channels.get(botMember.voiceChannelID));
+});
+
 bot.login(Config.token());

@@ -27,7 +27,7 @@ module.exports = class Stream extends Command {
     };
     this.message = message;
     this.YoutubeStream = YoutubeStream;
-    this.voiceChannel = null;
+    this.voiceChannel;
 
     if (message.channel.type !== 'text') {
       message.channel
@@ -62,7 +62,7 @@ module.exports = class Stream extends Command {
      * Get message author's voice channel or default voice channel
      * @returns {*|Array.<*>}
      */
-  static getVoiceChannel() {
+  static getVoiceChannel(authorFirst = true) {
     // Author's voice channel ID if connected to one
     const authorVoiceChannelID = this.message.member.voiceChannelID;
 
@@ -76,10 +76,12 @@ module.exports = class Stream extends Command {
       defaultVoiceChannel = this.voiceChannel;
     }
 
-    // Author's voice channel if connected or default channel
-    this.voiceChannel = (authorVoiceChannelID
-      ? this.message.guild.channels.get(authorVoiceChannelID)
-      : defaultVoiceChannel);
+    if (authorFirst) {
+      // Author's voice channel if connected or default channel
+      this.voiceChannel = (authorVoiceChannelID
+        ? this.message.guild.channels.get(authorVoiceChannelID)
+        : defaultVoiceChannel);
+    }
 
     return this.voiceChannel;
   }
@@ -196,5 +198,22 @@ module.exports = class Stream extends Command {
         name: data, type: 0,
       },
     });
+  }
+
+  static checkEmptyChannel(voiceChannel) {
+    this.voiceChannel = voiceChannel;
+    if (this.voiceChannel) {
+      if (this.voiceChannel.members.array().length < 2
+                && this.voiceChannel.connection
+                && this.voiceChannel.connection.dispatcher
+                && !this.voiceChannel.connection.dispatcher.paused) {
+        Pause.action(this, false);
+      } else if (this.voiceChannel.members.array().length >= 2
+                && this.voiceChannel.connection
+                && this.voiceChannel.connection.dispatcher
+                && this.voiceChannel.connection.dispatcher.paused) {
+        Resume.action(this, false);
+      }
+    }
   }
 };

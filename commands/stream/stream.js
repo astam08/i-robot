@@ -59,7 +59,9 @@ module.exports = class Stream extends Command {
 
   /**
      * Get message author's voice channel or default voice channel
-     * @returns {*|Array.<*>}
+     *
+     * @param authorFirst
+     * @returns {*|null}
      */
   static getVoiceChannel(authorFirst = true) {
     // Author's voice channel ID if connected to one
@@ -87,6 +89,7 @@ module.exports = class Stream extends Command {
 
   /**
      * Add given track to playlist
+     *
      * @param track
      * @param first
      */
@@ -127,6 +130,7 @@ module.exports = class Stream extends Command {
 
   /**
      * Starts next track in playlist on given connection
+     *
      * @param connection
      */
   static play(connection) {
@@ -187,6 +191,12 @@ module.exports = class Stream extends Command {
     }
   }
 
+  /**
+     * Sets the title of the playing game of the bot with the given data
+     *
+     * @param bot
+     * @param data
+     */
   static getStreamInfo(bot, data = 'Dreaming') {
     if (!this.bot) {
       this.bot = bot;
@@ -199,6 +209,13 @@ module.exports = class Stream extends Command {
     });
   }
 
+  /**
+     * Checks if the bot's voice channel is empty
+     * If it is, stream is paused if it was playing
+     * If not, stream is resumed if it was paused
+     *
+     * @param voiceChannel
+     */
   static checkEmptyChannel(voiceChannel) {
     this.voiceChannel = voiceChannel;
     if (this.voiceChannel) {

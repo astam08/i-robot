@@ -34,6 +34,11 @@ module.exports = class Play {
     this.reply(self);
   }
 
+  /**
+     * Function replying "impossible to read" if "this.impossible" is true
+     *
+     * @param self
+     */
   static reply(self) {
     if (this.impossible) {
       self.message.reply('Lecture impossible...');

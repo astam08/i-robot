@@ -27,7 +27,6 @@ module.exports = class Stream extends Command {
     };
     this.message = message;
     this.YoutubeStream = YoutubeStream;
-    this.voiceChannel;
 
     if (message.channel.type !== 'text') {
       message.channel

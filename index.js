@@ -36,7 +36,7 @@ bot.on('message', (message) => {
       Hello.parse(message);
     }
     if (message.guild
-        && message.message.author.id === message.guild.ownerID
+        && message.author.id === message.guild.ownerID
         && message.content.includes('!disconnect')) {
       bot.destroy().catch();
       process.exit();

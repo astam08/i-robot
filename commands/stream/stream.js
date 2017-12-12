@@ -4,10 +4,11 @@ const Play = require('./play');
 const Stop = require('./stop');
 const Resume = require('./resume');
 const Next = require('./next');
+const Volume = require('./volume');
 const YoutubeStream = require('ytdl-core');
 
 
-const streamMessage = ['!play', '!stop', '!next', '!pause', '!resume'];
+const streamMessage = ['!play', '!stop', '!next', '!pause', '!resume', '!volume'];
 
 let playlist = [];
 let localPlayingID;
@@ -18,7 +19,7 @@ module.exports = class Stream extends Command {
   }
 
   static action(message) {
-    this.volume = 1;
+    this.message = this.message ? this.message : 1;
     this.streamOptions = {
       seek: 0,
       volume: this.volume,
@@ -52,6 +53,9 @@ module.exports = class Stream extends Command {
         break;
       case '!next':
         Next.action(this);
+        break;
+      case '!volume':
+        Volume.action(this);
         break;
       default:
     }
@@ -231,5 +235,9 @@ module.exports = class Stream extends Command {
         Resume.action(this, false);
       }
     }
+  }
+
+  static setVolume(volume) {
+    this.volume = volume;
   }
 };

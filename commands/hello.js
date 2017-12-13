@@ -14,8 +14,7 @@ const helloMessage = [
 
 module.exports = class Hello extends Command {
   static match(message) {
-    return helloMessage
-      .some(value => message.content.toUpperCase().includes(value.toUpperCase()));
+    return helloMessage.some(value => message.content.toUpperCase().includes(value.toUpperCase()));
   }
 
   static action(message) {

@@ -5,12 +5,11 @@ const Stop = require('./stop');
 const Resume = require('./resume');
 const Next = require('./next');
 const Volume = require('./volume');
+const List = require('./list');
 const YoutubeStream = require('ytdl-core');
 
 
-const streamMessage = ['!play', '!stop', '!next', '!pause', '!resume', '!volume'];
-
-let playlist = [];
+const streamMessage = ['!play', '!stop', '!next', '!pause', '!resume', '!volume', '!list'];
 let localPlayingID;
 
 module.exports = class Stream extends Command {
@@ -19,6 +18,7 @@ module.exports = class Stream extends Command {
   }
 
   static action(message) {
+    this.playlist = this.playlist ? this.playlist : [];
     this.message = this.message ? this.message : 1;
     this.streamOptions = {
       seek: 0,
@@ -56,6 +56,9 @@ module.exports = class Stream extends Command {
         break;
       case '!volume':
         Volume.action(this);
+        break;
+      case '!list':
+        List.action(this);
         break;
       default:
     }
@@ -99,9 +102,9 @@ module.exports = class Stream extends Command {
      */
   static addToPlaylist(track, first = false) {
     if (first) {
-      playlist.unshift(track);
+      this.playlist.unshift(track);
     } else {
-      playlist.push(track);
+      this.playlist.push(track);
     }
     this.message.reply('Ajouté à la playlist :smirk:');
   }
@@ -110,14 +113,14 @@ module.exports = class Stream extends Command {
      * Used in stop.js
      */
   static emptyPlaylist() {
-    playlist = [];
+    this.playlist = [];
   }
 
   /**
      * Handles voiceChannel disconnection and starts playing on new connection
      */
   static playNext() {
-    if (playlist.length > 0) {
+    if (this.playlist.length > 0) {
       const voiceChannel = this.getVoiceChannel();
       if (voiceChannel.connection) {
         voiceChannel.leave();
@@ -139,7 +142,7 @@ module.exports = class Stream extends Command {
      */
   static play(connection) {
     try {
-      this.playing = playlist.shift();
+      this.playing = this.playlist.shift();
       this.playing.stream = YoutubeStream(this.playing.url, { filter: 'audioonly' });
 
       this.playing.stream.on('info', (info) => {
@@ -170,7 +173,7 @@ module.exports = class Stream extends Command {
           }
         })
         .on('end', () => {
-          if (playlist.length > 0) {
+          if (this.playlist.length > 0) {
             setTimeout(() => {
               if (this.playing.id === localPlayingID) {
                 this.playing = null;

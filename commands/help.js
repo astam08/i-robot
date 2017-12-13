@@ -19,6 +19,7 @@ module.exports = class Help extends Command {
         '\t\t!pause \t\t\t\t\t\t\t\t\t Met la lecture en pause.\n' +
         '\t\t!resume \t\t\t\t\t\t\t\t  Continue la lecture si elle est en pause.\n' +
         '\t\t!volume <1 - 200>\t\t\t\tChange le volume de lecture.\n' +
+        '\t\t!list \t\t\t\t\t\t\t\t\t\t  Affiche tous les titres dans la playlist.\n' +
         '\t\t!stop \t\t\t\t\t\t\t\t\t\tArrête la lecture, vide la playlist et fait quitter i-robot du canal vocal.\n\n\n' +
         '\tUn message incluant @i-robot et une façon de saluer et i-robot vous dira bonjour à sa façon.\n';
 

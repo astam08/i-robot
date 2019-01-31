@@ -7,7 +7,7 @@ const Stream = require('./commands/stream/stream');
 const Config = require('./config');
 const Hello = require('./commands/hello');
 const Help = require('./commands/help');
-const Jokes = require('./commands/jokes');
+//const Jokes = require('./commands/jokes');
 
 bot.on('ready', () => {
   /*
@@ -33,7 +33,7 @@ bot.on('message', (message) => {
     Ping.parse(message);
     Google.parse(message);
     Help.parse(message);
-    Jokes.parse(message);
+    //Jokes.parse(message);
     if (message.content.includes(`<@${bot.user.id}>`)) {
       Hello.parse(message);
     }

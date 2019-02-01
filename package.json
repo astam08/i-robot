@@ -9,13 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "deep-extend": ">=0.5.1",
+    "deep-extend": "^0.5.1",
     "discord.js": "^11.2.1",
-    "lodash": ">=4.17.5",
+    "lodash": "^4.17.5",
+    "mocha": "^5.2.0",
     "node-opus": "^0.2.7",
     "npm-check-updates": "^2.13.0",
     "youtube-audio-stream": "0.0.50",
-    "ytdl-core": "^0.18.3"
+    "ytdl-core": "^0.29.1"
   },
   "devDependencies": {
     "eslint": "^4.13.1",

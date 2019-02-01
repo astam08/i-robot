@@ -57,3 +57,4 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
 });
 
 bot.login(Config.token()).catch();
+Stream.YoutubeApiKey = Config.YoutubeApiKey();

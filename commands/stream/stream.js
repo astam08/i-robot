@@ -7,14 +7,15 @@ const Next = require('./next');
 const Volume = require('./volume');
 const List = require('./list');
 const YoutubeStream = require('ytdl-core');
-
+const YoutubeSearch = require('youtube-search');
 
 const streamMessage = ['!play', '!stop', '!next', '!pause', '!resume', '!volume', '!list'];
 let localPlayingID;
 
 module.exports = class Stream extends Command {
   static match(message) {
-    return streamMessage.includes(message.content.split(' ').shift());
+    return streamMessage.includes(message.content.split(' ')
+      .shift());
   }
 
   static action(message) {
@@ -26,13 +27,18 @@ module.exports = class Stream extends Command {
       passes: 20,
       bitrate: 'auto',
     };
+    this.searchOptions = {
+      maxResults: 10,
+      key: this.YoutubeApiKey,
+    };
     this.message = message;
     this.YoutubeStream = YoutubeStream;
+    this.YoutubeSearch = YoutubeSearch;
 
     if (message.channel.type !== 'text') {
       message.channel
         .send('Désolé, je ne peux faire ça que ' +
-                    'dans un salon textuel :upside_down:');
+          'dans un salon textuel :upside_down:');
       return;
     }
 
@@ -65,11 +71,11 @@ module.exports = class Stream extends Command {
   }
 
   /**
-     * Get message author's voice channel or default voice channel
-     *
-     * @param authorFirst
-     * @returns {*|null}
-     */
+   * Get message author's voice channel or default voice channel
+   *
+   * @param authorFirst
+   * @returns {*|null}
+   */
   static getVoiceChannel(authorFirst = true) {
     // Author's voice channel ID if connected to one
     const authorVoiceChannelID = this.message.member.voiceChannelID;
@@ -95,11 +101,11 @@ module.exports = class Stream extends Command {
   }
 
   /**
-     * Add given track to playlist
-     *
-     * @param track
-     * @param first
-     */
+   * Add given track to playlist
+   *
+   * @param track
+   * @param first
+   */
   static addToPlaylist(track, first = false) {
     if (first) {
       this.playlist.unshift(track);
@@ -110,15 +116,15 @@ module.exports = class Stream extends Command {
   }
 
   /**
-     * Used in stop.js
-     */
+   * Used in stop.js
+   */
   static emptyPlaylist() {
     this.playlist = [];
   }
 
   /**
-     * Handles voiceChannel disconnection and starts playing on new connection
-     */
+   * Handles voiceChannel disconnection and starts playing on new connection
+   */
   static playNext() {
     if (this.playlist.length > 0) {
       const voiceChannel = this.getVoiceChannel();
@@ -131,15 +137,15 @@ module.exports = class Stream extends Command {
           this.play(connection);
         });
     } else {
-      this.message.channel.send("Il n'y a rien à jouer ! :thinking:");
+      this.message.channel.send('Il n\'y a rien à jouer ! :thinking:');
     }
   }
 
   /**
-     * Starts next track in playlist on given connection
-     *
-     * @param connection
-     */
+   * Starts next track in playlist on given connection
+   *
+   * @param connection
+   */
   static play(connection) {
     try {
       this.playing = this.playlist.shift();
@@ -199,11 +205,11 @@ module.exports = class Stream extends Command {
   }
 
   /**
-     * Sets the title of the playing game of the bot with the given data
-     *
-     * @param bot
-     * @param data
-     */
+   * Sets the title of the playing game of the bot with the given data
+   *
+   * @param bot
+   * @param data
+   */
   static getStreamInfo(bot, data = 'Dreaming') {
     if (!this.bot) {
       this.bot = bot;
@@ -211,30 +217,32 @@ module.exports = class Stream extends Command {
 
     bot.user.setPresence({
       game: {
-        name: data, type: 0,
+        name: data,
+        type: 0,
       },
-    }).catch();
+    })
+      .catch();
   }
 
   /**
-     * Checks if the bot's voice channel is empty
-     * If it is, stream is paused if it was playing
-     * If not, stream is resumed if it was paused
-     *
-     * @param voiceChannel
-     */
+   * Checks if the bot's voice channel is empty
+   * If it is, stream is paused if it was playing
+   * If not, stream is resumed if it was paused
+   *
+   * @param voiceChannel
+   */
   static checkEmptyChannel(voiceChannel) {
     this.voiceChannel = voiceChannel;
     if (this.voiceChannel) {
       if (this.voiceChannel.members.array().length < 2
-                && this.voiceChannel.connection
-                && this.voiceChannel.connection.dispatcher
-                && !this.voiceChannel.connection.dispatcher.paused) {
+        && this.voiceChannel.connection
+        && this.voiceChannel.connection.dispatcher
+        && !this.voiceChannel.connection.dispatcher.paused) {
         Pause.action(this, false);
       } else if (this.voiceChannel.members.array().length >= 2
-                && this.voiceChannel.connection
-                && this.voiceChannel.connection.dispatcher
-                && this.voiceChannel.connection.dispatcher.paused) {
+        && this.voiceChannel.connection
+        && this.voiceChannel.connection.dispatcher
+        && this.voiceChannel.connection.dispatcher.paused) {
         Resume.action(this, false);
       }
     }

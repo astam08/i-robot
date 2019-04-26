@@ -9,7 +9,7 @@ const List = require('./list');
 const YoutubeStream = require('ytdl-core');
 const YoutubeSearch = require('youtube-search');
 
-const streamMessage = ['!play', '!stop', '!next', '!pause', '!resume', '!volume', '!list'];
+const streamMessage = ['--play', '--stop', '--next', '--pause', '--resume', '--volume', '--list'];
 let localPlayingID;
 
 module.exports = class Stream extends Command {
@@ -45,25 +45,25 @@ module.exports = class Stream extends Command {
     const args = message.content.split(' ');
 
     switch (args[0]) {
-      case '!pause':
+      case '--pause':
         Pause.action(this);
         break;
-      case '!play':
+      case '--play':
         Play.action(this);
         break;
-      case '!stop':
+      case '--stop':
         Stop.action(this);
         break;
-      case '!resume':
+      case '--resume':
         Resume.action(this);
         break;
-      case '!next':
+      case '--next':
         Next.action(this);
         break;
-      case '!volume':
+      case '--volume':
         Volume.action(this);
         break;
-      case '!list':
+      case '--list':
         List.action(this);
         break;
       default:
@@ -112,7 +112,7 @@ module.exports = class Stream extends Command {
     } else {
       this.playlist.push(track);
     }
-    this.message.reply('Ajouté à la playlist :smirk:');
+    this.message.reply('Playlist ditambahkan :smirk:');
   }
 
   /**
@@ -137,7 +137,7 @@ module.exports = class Stream extends Command {
           this.play(connection);
         });
     } else {
-      this.message.channel.send('Il n\'y a rien à jouer ! :thinking:');
+      this.message.channel.send('Skip! :thinking:');
     }
   }
 
@@ -154,7 +154,7 @@ module.exports = class Stream extends Command {
       this.playing.stream.on('info', (info) => {
         this.playing.trackInfo = info.title;
         this.getStreamInfo(this.bot, this.playing.trackInfo);
-        this.message.channel.send(`Lecture de **${this.playing.trackInfo}** envoyé par ${this.playing.author}`);
+        this.message.channel.send(`Diputar **${this.playing.trackInfo}** Permintaan Dari ${this.playing.author}`);
       });
 
       setTimeout(() => {
@@ -210,7 +210,7 @@ module.exports = class Stream extends Command {
    * @param bot
    * @param data
    */
-  static getStreamInfo(bot, data = 'Dreaming') {
+  static getStreamInfo(bot, data = 'Stanby Cuk') {
     if (!this.bot) {
       this.bot = bot;
     }

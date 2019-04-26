@@ -9,7 +9,7 @@ const List = require('./list');
 const YoutubeStream = require('ytdl-core');
 const YoutubeSearch = require('youtube-search');
 
-const streamMessage = ['--play', '--stop', '--next', '--pause', '--resume', '--volume', '--list'];
+const streamMessage = ['--putar', '--stop', '--next', '--pause', '--resume', '--volume', '--list'];
 let localPlayingID;
 
 module.exports = class Stream extends Command {
@@ -48,7 +48,7 @@ module.exports = class Stream extends Command {
       case '--pause':
         Pause.action(this);
         break;
-      case '--play':
+      case '--putar':
         Play.action(this);
         break;
       case '--stop':
@@ -112,7 +112,7 @@ module.exports = class Stream extends Command {
     } else {
       this.playlist.push(track);
     }
-    this.message.reply('Playlist ditambahkan :smirk:');
+    this.message.reply('Pencarian Selesai :smirk:');
   }
 
   /**
@@ -189,7 +189,7 @@ module.exports = class Stream extends Command {
           } else {
             this.getStreamInfo(this.bot);
             this.playing = null;
-            this.message.channel.send('Fin de la playlist');
+            this.message.channel.send('Tidak ada playlist');
             connection.channel.leave();
             this.voiceChannel = null;
           }

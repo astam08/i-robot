@@ -7,19 +7,19 @@ module.exports = class Help extends Command {
 
   static action(message) {
     const answer = '```Markdown\n' +
-        '# Commandes du bot\n' +
+        '# Menu bot\n' +
         '\n' +
-        '* !help - Affiche cette aide.\n' +
-        '* !google <recherche> - Donne un lien sur google de la recherche associée.\n' +
-        '* !ping - Renvoie pong.\n' +
-        '* !disconnect - Déconnecte i-robot du serveur.(Admin only)\n' +
+        '* --help - List Menu.\n' +
+        '* --google <recherche> - Error Cuk.\n' +
+        '* --ping -  pong.\n' +
+        '* --disconnect - .(Admin only)\n' +
         '\n' +
-        '* Commandes de stream :\n' +
+        '* Perintah Musik :\n' +
         '\n' +
-        '  * !play <lien YouTube> - Joue la vidéo liée à l\'URL ou la rajoute à la fin de la playlist.\n' +
-      '  * !play - Continue la lecture si elle est en pause.\n' +
-      '  * !next <lien YouTube> - Ajoute la vidéo liée à l\'URL au début de la playlist et la joue.\n' +
-      '  * !next - Joue la piste suivante.\n' +
+        '  * --putar <link YouTube> - .\n' +
+      '  * --putar - .\n' +
+      '  * --skip <lien YouTube> - Ajoute la vidéo liée à l\'URL au début de la playlist et la joue.\n' +
+      '  * --skip - Joue la piste suivante.\n' +
       '  * !pause - Met la lecture en pause.\n' +
       '  * !resume - Continue la lecture si elle est en pause.\n' +
       '  * !volume <1 - 200> - Change le volume de lecture.\n' +

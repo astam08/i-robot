@@ -1,6 +1,6 @@
 module.exports = class Config {
   static token() {
-    return 'NDc0MTAzMzY4MDM0Mjg3NjI2.XMMwVQ._a-Q_OkbKfJ2GiK5J_OV-DJSiwQ';
+    return 'NTcyNzgxODgwNzQzNjkwMjcw.XMhTow.ubMlD43VblFpLs-cIxTGPvl_kek';
   }
 
   static YoutubeApiKey() {

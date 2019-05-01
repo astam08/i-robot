@@ -9,7 +9,7 @@ const List = require('./list');
 const YoutubeStream = require('ytdl-core');
 const YoutubeSearch = require('youtube-search');
 
-const streamMessage = ['_rputar', '_rstop', '_rskip', '_rpause', '_rresume', '_rvolume', '_rlist'];
+const streamMessage = ['Jputar', 'Jstop', 'Jskip', 'Jpause', 'Jresume', 'Jvolume', 'Jlist'];
 let localPlayingID;
 
 module.exports = class Stream extends Command {

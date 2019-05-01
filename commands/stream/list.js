@@ -1,7 +1,7 @@
 module.exports = class List {
   static action(self) {
     this.list = '';
-    const playing = (self.playing && !self.playing.empty) ? `En lecture : ${self.playing.trackInfo}\n` : null;
+    const playing = (self.playing && !self.playing.empty) ? `Sedang di Putar▶️ : ${self.playing.trackInfo}\n` : null;
 
     if (self.playlist && self.playlist.length > 0) {
       self.playlist.map((element, it) => (self.YoutubeStream
@@ -19,7 +19,7 @@ module.exports = class List {
     } else if (playing) {
       self.message.channel.send(playing);
     } else {
-      self.message.reply('La playlist est vide...');
+      self.message.reply('↘️PLAYLIST↙️');
     }
   }
 };

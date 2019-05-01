@@ -5,10 +5,10 @@ module.exports = class Pause {
       if (!voiceChannel.connection.dispatcher.paused) {
         voiceChannel.connection.dispatcher.pause();
       } else if (speak) {
-        self.message.reply("C'est déjà en pause !");
+        self.message.reply("Pause⏸️");
       }
     } else if (speak) {
-      self.message.reply('Je ne joue rien actuellement. :rolling_eyes:');
+      self.message.reply(';resume Untuk melanjutkan');
     }
   }
 };

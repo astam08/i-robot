@@ -9,7 +9,7 @@ const List = require('./list');
 const YoutubeStream = require('ytdl-core');
 const YoutubeSearch = require('youtube-search');
 
-const streamMessage = ['--putar', '--stop', '--next', '--pause', '--resume', '--volume', '--list'];
+const streamMessage = [';putar', ';leave', ';skip', ';pause', ';resume', ';volume', ';list'];
 let localPlayingID;
 
 module.exports = class Stream extends Command {
@@ -37,33 +37,33 @@ module.exports = class Stream extends Command {
 
     if (message.channel.type !== 'text') {
       message.channel
-        .send('Désolé, je ne peux faire ça que ' +
-          'dans un salon textuel :upside_down:');
+        .send('! ' +
+          '!');
       return;
     }
 
     const args = message.content.split(' ');
 
     switch (args[0]) {
-      case '--pause':
+      case ';pause':
         Pause.action(this);
         break;
-      case '--putar':
+      case ';putar':
         Play.action(this);
         break;
-      case '--stop':
+      case ';leave':
         Stop.action(this);
         break;
-      case '--resume':
+      case ';resume':
         Resume.action(this);
         break;
-      case '--next':
+      case ';skip':
         Next.action(this);
         break;
-      case '--volume':
+      case ';volume':
         Volume.action(this);
         break;
-      case '--list':
+      case ';list':
         List.action(this);
         break;
       default:
@@ -112,7 +112,7 @@ module.exports = class Stream extends Command {
     } else {
       this.playlist.push(track);
     }
-    this.message.reply('Pencarian Selesai :smirk:');
+    this.message.reply('Berhasil Di tambahkan ke Playlist ☑️');
   }
 
   /**
@@ -189,7 +189,7 @@ module.exports = class Stream extends Command {
           } else {
             this.getStreamInfo(this.bot);
             this.playing = null;
-            this.message.channel.send('Tidak ada playlist');
+            this.message.channel.send('Berhasil keluar☑️');
             connection.channel.leave();
             this.voiceChannel = null;
           }

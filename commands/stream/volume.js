@@ -12,7 +12,7 @@ module.exports = class Volume {
       self.setVolume(volume / 100);
       self.message.reply(`Le volume est à ${volume}%`);
     } else {
-      self.message.reply('Le volume doit être compris entre 1 et 200');
+      self.message.reply('masukan 1-200 📶');
     }
   }
 };

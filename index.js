@@ -5,7 +5,7 @@ const bot = new Discord.Client();
 const Google = require('./commands/google');
 const Ping = require('./commands/ping');
 const Stream = require('./commands/stream/stream');
-const Config = require('./config');
+///const Config = require('./config');
 const Hello = require('./commands/hello');
 const Help = require('./commands/help');
 // const Jokes = require('./commands/jokes');
@@ -59,8 +59,8 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
   Stream.checkEmptyChannel(guild.channels.get(botMember.voiceChannelID));
 });
 
-bot.login(Config.token())
+bot.login(process.env.TOKEN)
   .catch();
-Stream.YoutubeApiKey = Config.YoutubeApiKey();
+Stream.YoutubeApiKey = process.env.YoutubeApiKey;
 
 // TODO: Add Jokes + Add shortcuts

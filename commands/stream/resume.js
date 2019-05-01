@@ -5,10 +5,10 @@ module.exports = class Resume {
       if (voiceChannel.connection.dispatcher.paused) {
         voiceChannel.connection.dispatcher.resume();
       } else if (speak) {
-        self.message.reply('STOP⏹️');
+        self.message.reply('DILANJUTKAN▶️');
       }
     } else if (speak) {
-      self.message.reply('⏸️');
+      self.message.reply('▶️');
     }
   }
 };

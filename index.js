@@ -60,8 +60,8 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
   Stream.checkEmptyChannel(guild.channels.get(botMember.voiceChannelID));
 });
 
-bot.login(process.env.TOKEN())
+bot.login(process.env.TOKEN)
   .catch();
-Stream.YoutubeApiKey = process.env.YoutubeApiKey();
+Stream.YoutubeApiKey = process.env.YoutubeApiKey;
 
 // TODO: Add Jokes + Add shortcuts

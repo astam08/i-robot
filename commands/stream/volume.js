@@ -10,9 +10,9 @@ module.exports = class Volume {
         voiceChannel.connection.dispatcher.setVolume(volume / 100);
       }
       self.setVolume(volume / 100);
-      self.message.reply(`Le volume est à ${volume}%`);
+      self.message.reply(`Volume di set ke  ${volume}%`);
     } else {
-      self.message.reply('Le volume doit être compris entre 1 et 200');
+      self.message.reply('Silahkan masukan 1-200');
     }
   }
 };

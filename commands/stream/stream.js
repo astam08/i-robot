@@ -9,7 +9,7 @@ const List = require('./list');
 const YoutubeStream = require('ytdl-core');
 const YoutubeSearch = require('youtube-search');
 
-const streamMessage = ['--putar', '--stop', '--next', '--pause', '--resume', '--volume', '--list'];
+const streamMessage = ['_rputar', '_rstop', '_rskip', '_rpause', '_rresume', '_rvolume', '_rlist'];
 let localPlayingID;
 
 module.exports = class Stream extends Command {
@@ -45,25 +45,25 @@ module.exports = class Stream extends Command {
     const args = message.content.split(' ');
 
     switch (args[0]) {
-      case '--pause':
+      case '_rpause':
         Pause.action(this);
         break;
-      case '--putar':
+      case '_rputar':
         Play.action(this);
         break;
-      case '--stop':
+      case '_rstop':
         Stop.action(this);
         break;
-      case '--resume':
+      case '_rresume':
         Resume.action(this);
         break;
-      case '--next':
+      case '_rskip':
         Next.action(this);
         break;
-      case '--volume':
+      case '_rvolume':
         Volume.action(this);
         break;
-      case '--list':
+      case '_rlist':
         List.action(this);
         break;
       default:
@@ -112,7 +112,7 @@ module.exports = class Stream extends Command {
     } else {
       this.playlist.push(track);
     }
-    this.message.reply('Pencarian Selesai :smirk:');
+    this.message.reply('Ditambahkan Ke List ');
   }
 
   /**
@@ -137,7 +137,7 @@ module.exports = class Stream extends Command {
           this.play(connection);
         });
     } else {
-      this.message.channel.send('Skip! :thinking:');
+      this.message.channel.send('Skip');
     }
   }
 
@@ -189,7 +189,7 @@ module.exports = class Stream extends Command {
           } else {
             this.getStreamInfo(this.bot);
             this.playing = null;
-            this.message.channel.send('Tidak ada playlist');
+            this.message.channel.send('Playlist Selesai ');
             connection.channel.leave();
             this.voiceChannel = null;
           }
@@ -210,7 +210,7 @@ module.exports = class Stream extends Command {
    * @param bot
    * @param data
    */
-  static getStreamInfo(bot, data = 'Stanby Cuk') {
+  static getStreamInfo(bot, data = 'Standby Cuk') {
     if (!this.bot) {
       this.bot = bot;
     }

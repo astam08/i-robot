@@ -9,7 +9,7 @@ const List = require('./list');
 const YoutubeStream = require('ytdl-core');
 const YoutubeSearch = require('youtube-search');
 
-const streamMessage = [';putar', ';leave', ';skip', ';pause', ';resume', ';volume', ';list'];
+const streamMessage = ['_rputar', '_rstop', '_rskip', '_rpause', '_rresume', '_rvolume', '_rlist'];
 let localPlayingID;
 
 module.exports = class Stream extends Command {
@@ -37,33 +37,33 @@ module.exports = class Stream extends Command {
 
     if (message.channel.type !== 'text') {
       message.channel
-        .send('! ' +
-          '!');
+        .send('Désolé, je ne peux faire ça que ' +
+          'dans un salon textuel :upside_down:');
       return;
     }
 
     const args = message.content.split(' ');
 
     switch (args[0]) {
-      case ';pause':
+      case '_rpause':
         Pause.action(this);
         break;
-      case ';putar':
+      case '_rputar':
         Play.action(this);
         break;
-      case ';leave':
+      case '_rleave':
         Stop.action(this);
         break;
-      case ';resume':
+      case '_rresume':
         Resume.action(this);
         break;
-      case ';skip':
+      case '_rskip':
         Next.action(this);
         break;
-      case ';volume':
+      case '_rvolume':
         Volume.action(this);
         break;
-      case ';list':
+      case '_rlist':
         List.action(this);
         break;
       default:
@@ -112,7 +112,7 @@ module.exports = class Stream extends Command {
     } else {
       this.playlist.push(track);
     }
-    this.message.reply('Berhasil Di tambahkan ke Playlist ☑️');
+    this.message.reply('Ditambahkan Ke List ☑️');
   }
 
   /**
@@ -137,7 +137,7 @@ module.exports = class Stream extends Command {
           this.play(connection);
         });
     } else {
-      this.message.channel.send('Skip! :thinking:');
+      this.message.channel.send('Skip⏭️');
     }
   }
 
@@ -189,7 +189,7 @@ module.exports = class Stream extends Command {
           } else {
             this.getStreamInfo(this.bot);
             this.playing = null;
-            this.message.channel.send('Berhasil keluar☑️');
+            this.message.channel.send('Playlist Selesai☑️📴 ');
             connection.channel.leave();
             this.voiceChannel = null;
           }
@@ -210,7 +210,7 @@ module.exports = class Stream extends Command {
    * @param bot
    * @param data
    */
-  static getStreamInfo(bot, data = 'Stanby Cuk') {
+  static getStreamInfo(bot, data = 'Standby Cuk') {
     if (!this.bot) {
       this.bot = bot;
     }

@@ -2,31 +2,31 @@ const Command = require('./command');
 
 module.exports = class Help extends Command {
   static match(message) {
-    return message.content.startsWith(';bantuan');
+    return message.content.startsWith('_rhelp');
   }
 
   static action(message) {
     const answer = '```Markdown\n' +
         '# Menu bot\n' +
         '\n' +
-        '* ;bantuan - List Menu.\n' +
-        '* ;google <recherche> - Error Cuk.\n' +
-        '* ;ping -  pong.\n' +
-        '* ;disconnect - .(Admin only)\n' +
+        '* _rhelp - List Menu.\n' +
+        '* _rgoogle -Fitur Telah dihapus📴' +
+        '* _rping -  pong.\n' +
+        '* disconnect - .(Admin only)\n' +
         '\n' +
         '* Perintah Musik :\n' +
         '\n' +
-        '  * ;putar <link YouTube> - .\n' +
-      '  * ;putar - .\n' +
-      '  * ;skip - Skip Nomor \n' +
-      '  * ;skip - SKIP LAGU.\n' +
-      '  * ;pause - PAUSE.\n' +
-      '  * ;resume - LANJUTKAN LAGU.\n' +
-      '  * ;volume <1 - 200> - VOLUME.\n' +
-      '  * ;list - MENAMPILKAN PLAYLIST.\n' +
-      '  * ;leave - KELUAR.\n' +
+        '  * _rputar Judul/Link.\n' +
+      '  * _rputar - .\n' +
+      '  * _rskip .\n' +
+      '  * _rskip - .\n' +
+      '  * _rpause - .\n' +
+      '  * _rresume - .\n' +
+      '  * _rvolume 1-200\n' +
+      '  * _rlist - 🔀PLAYLIST🔀.\n' +
+      '  * _rleave - .\n' +
       '\n' +
-      'Ansel TSM • Z DEVELOPMENT.\n' +
+      'ANSEL TSM • Z DEVELOPMENT \n' +
       '```\n';
 
     message.channel.send(answer);

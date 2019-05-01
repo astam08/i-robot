@@ -1,14 +1,14 @@
 const Command = require('./command');
 
 const helloMessage = [
-  'bonjour',
-  'hello',
-  'salut',
-  'hi',
-  'slt',
-  'bjr',
-  'yo',
-  'wesh',
+  'Kambing🤘',
+  'Bacooott☝️',
+  'Bangsat🤜',
+  'Pantek🖕',
+  'Asssyyyyuuu',
+  'Qimaaaxx',
+  'Hallo juga',
+  'Apalu Kangen sama gue ya',
 ];
 
 

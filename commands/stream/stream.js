@@ -45,25 +45,25 @@ module.exports = class Stream extends Command {
     const args = message.content.split(' ');
 
     switch (args[0]) {
-      case '_rpause':
+      case 'Jpause':
         Pause.action(this);
         break;
-      case '_rputar':
+      case 'Jputar':
         Play.action(this);
         break;
-      case '_rstop':
+      case 'Jleave':
         Stop.action(this);
         break;
-      case '_rresume':
+      case 'Jresume':
         Resume.action(this);
         break;
-      case '_rskip':
+      case 'Jskip':
         Next.action(this);
         break;
-      case '_rvolume':
+      case 'Jvolume':
         Volume.action(this);
         break;
-      case '_rlist':
+      case 'Jlist':
         List.action(this);
         break;
       default:
@@ -112,7 +112,7 @@ module.exports = class Stream extends Command {
     } else {
       this.playlist.push(track);
     }
-    this.message.reply('Ditambahkan Ke List ');
+    this.message.reply('Ditambahkan Ke List ☑️');
   }
 
   /**

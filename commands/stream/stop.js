@@ -6,7 +6,7 @@ module.exports = class Stop {
       voiceChannel.connection.disconnect();
       voiceChannel.leave();
     } else {
-      self.message.reply('Je ne joue rien actuellement. :rolling_eyes:');
+      self.message.reply('Terimaksih Udah Putar lagu Disni');
     }
   }
 };

@@ -1,3 +1,5 @@
+const express = require('express');
+const app = express();
 const Discord = require('discord.js');
 
 const bot = new Discord.Client();
@@ -58,8 +60,8 @@ bot.on('voiceStateUpdate', (oldMember, newMember) => {
   Stream.checkEmptyChannel(guild.channels.get(botMember.voiceChannelID));
 });
 
-bot.login(Config.token())
+bot.login(process.env.TOKEN())
   .catch();
-Stream.YoutubeApiKey = Config.YoutubeApiKey();
+Stream.YoutubeApiKey = process.env.YoutubeApiKey();
 
 // TODO: Add Jokes + Add shortcuts
